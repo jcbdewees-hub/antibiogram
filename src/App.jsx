@@ -309,6 +309,49 @@ const SYNDROMES = {
         {name:"Pyelonephritis (admit) / Complicated / Sepsis",drugs:["Cefepime or Pip/tazo (IV)"],note:"Cefepime: E. coli 93%. Pip/tazo: E. coli 98%. For patients requiring admission."},
       ]},
   },
+  // ── STI ──
+  gc_ct: {
+    cat:"gu", icon:"🔬", title:"Gonorrhea / Chlamydia (Urethritis / Cervicitis)",
+    desc:"CDC 2021 guidelines — ceftriaxone IM + doxycycline",
+    peds:{ tk:"peds-nonurine", orgs:[],
+      teach:"N. gonorrhoeae and C. trachomatis are not on the OHSU antibiogram — they require specialized susceptibility testing. CDC 2021 guidelines are the standard. Key 2021 changes: dual therapy (ceftriaxone + azithromycin) is NO LONGER recommended for all patients — ceftriaxone monotherapy is now standard for gonorrhea due to azithromycin resistance concerns. Add doxycycline only if chlamydia has not been excluded. In adolescents, doxycycline is preferred over azithromycin for chlamydia based on superior efficacy, especially at extragenital (rectal) sites. Note: ciprofloxacin is restricted in peds and should not be used for gonococcal infections in children.",
+      rx:[
+        {name:"Gonorrhea (uncomplicated)",drugs:["Ceftriaxone 500mg IM x1"],note:"CDC 2021. If chlamydia not excluded, add doxycycline 100mg BID x 7 days. For patients ≥150kg, use ceftriaxone 1g."},
+        {name:"Chlamydia (urogenital/rectal)",drugs:["Doxycycline 100mg PO BID x 7 days"],note:"CDC 2021: doxycycline preferred over azithromycin, especially for rectal infections (100% vs 74% cure). Doxycycline not for children <8 years."},
+        {name:"Chlamydia (<8 years or pregnant)",drugs:["Azithromycin 1g PO x1"],note:"Alternative when doxycycline contraindicated. Less effective for rectal chlamydia."},
+        {name:"Gonorrhea (ceftriaxone unavailable)",drugs:["Gentamicin 240mg IM x1 + Azithromycin 2g PO x1"],note:"Alternative regimen. Or cefixime 800mg PO x1."},
+      ]},
+    adult:{ tk:"adult-nonurine", orgs:[],
+      teach:"Same CDC 2021 framework. Ceftriaxone 500mg IM is now monotherapy for gonorrhea — dual therapy with azithromycin is no longer routine. Add doxycycline 100mg BID x 7 days if chlamydia not excluded. For pharyngeal gonorrhea: ceftriaxone is the ONLY reliable treatment — no alternatives. Test of cure 7–14 days after treatment for pharyngeal infections. Expedited partner therapy (EPT) should be offered for chlamydia and considered for gonorrhea per state law. NOTE: Bicillin L-A (benzathine penicillin) has had ongoing supply shortages — the FDA authorized temporary importation of Lentocilin in March 2026. This primarily affects syphilis treatment, not GC/CT.",
+      rx:[
+        {name:"Gonorrhea (uncomplicated)",drugs:["Ceftriaxone 500mg IM x1"],note:"CDC 2021 monotherapy. Add doxycycline if chlamydia not excluded. 1g if ≥150kg."},
+        {name:"Chlamydia",drugs:["Doxycycline 100mg PO BID x 7 days"],note:"Preferred over azithromycin. Superior rectal cure rates. Delayed-release 200mg daily formulation also effective."},
+        {name:"Pharyngeal gonorrhea",drugs:["Ceftriaxone 500mg IM x1"],note:"No reliable alternative for pharyngeal GC. Test of cure 7–14 days after treatment."},
+        {name:"Ceftriaxone allergy/unavailable",drugs:["Gentamicin 240mg IM + Azithromycin 2g PO"],note:"Or cefixime 800mg PO. Test of cure recommended with alternative regimens."},
+      ]},
+  },
+  pid: {
+    cat:"gu", icon:"🩺", title:"Pelvic Inflammatory Disease",
+    desc:"Polymicrobial — GC, CT, anaerobes, M. genitalium",
+    peds:{ tk:"peds-nonurine", orgs:["E. coli"],
+      teach:"PID in adolescents follows the same CDC 2021 treatment guidelines as adults. Key 2021 change: metronidazole is now RECOMMENDED (not optional) in all PID regimens to provide anaerobic coverage, based on an RCT (Wiesenfeld et al., CID 2021) showing improved endometrial anaerobe eradication without reduced adherence. Mild-to-moderate PID can be treated outpatient (PEACH study). Hospitalize for: tubo-ovarian abscess, pregnancy, severe illness/vomiting, failure of outpatient therapy at 72h, or inability to follow outpatient regimen. M. genitalium is increasingly recognized in PID — test if available, treat with doxycycline first-line pending susceptibility.",
+      rx:[
+        {name:"Outpatient (mild/moderate)",drugs:["Ceftriaxone 500mg IM x1 + Doxycycline 100mg BID x 14 days + Metronidazole 500mg BID x 14 days"],note:"CDC 2021 recommended regimen. Metronidazole now standard (not optional). Covers GC, CT, and anaerobes."},
+        {name:"Outpatient (cefoxitin alternative)",drugs:["Cefoxitin 2g IM x1 + Probenecid 1g PO x1 + Doxycycline 100mg BID x 14 days + Metronidazole 500mg BID x 14 days"],note:"Alternative IM cephalosporin option."},
+        {name:"Inpatient (parenteral)",drugs:["Ceftriaxone 1g IV q24h + Doxycycline 100mg PO BID + Metronidazole 500mg IV/PO BID"],note:"Transition to PO doxycycline + metronidazole after clinical improvement to complete 14 days total."},
+        {name:"Inpatient (alternative)",drugs:["Clindamycin 900mg IV q8h + Gentamicin (loading then maintenance)"],note:"Gentamicin: E. coli 93% (peds non-urine). After improvement, transition to PO doxycycline + metronidazole x 14 days."},
+        {name:"Cephalosporin allergy (low GC risk)",drugs:["Levofloxacin 500mg PO daily + Metronidazole 500mg BID x 14 days"],note:"Only if GC prevalence/risk is low and follow-up is likely. Test for GC before starting."},
+      ]},
+    adult:{ tk:"adult-nonurine", orgs:["E. coli"],
+      teach:"CDC 2021: metronidazole is now recommended (previously optional) in all outpatient PID regimens. The Wiesenfeld RCT demonstrated that adding metronidazole to ceftriaxone + doxycycline significantly reduced endometrial anaerobes without affecting medication adherence or causing significantly more adverse effects. BV is frequently associated with PID and is treated by metronidazole. Mild-to-moderate PID outcomes are similar with outpatient vs. inpatient treatment (PEACH study). Admit for: TOA, pregnancy, severe illness, failed 72h outpatient therapy. For TOA: transition to clindamycin or metronidazole (not doxycycline alone) for better anaerobic coverage.",
+      rx:[
+        {name:"Outpatient (mild/moderate)",drugs:["Ceftriaxone 500mg IM x1 + Doxycycline 100mg BID x 14 days + Metronidazole 500mg BID x 14 days"],note:"CDC 2021. Metronidazole now standard. Ceftriaxone 1g if ≥150kg."},
+        {name:"Outpatient (cefoxitin alternative)",drugs:["Cefoxitin 2g IM + Probenecid 1g PO + Doxycycline + Metronidazole x 14 days"],note:"Alternative IM cephalosporin option."},
+        {name:"Inpatient (parenteral)",drugs:["Ceftriaxone 1g IV q24h + Doxycycline 100mg PO BID + Metronidazole 500mg IV/PO BID"],note:"Oral doxycycline preferred (same bioavailability, less painful than IV). Transition to PO after clinical improvement."},
+        {name:"Inpatient (alternative)",drugs:["Clindamycin 900mg IV q8h + Gentamicin"],note:"After improvement: PO doxycycline + metronidazole to complete 14 days. For TOA: use clindamycin or metronidazole (not doxycycline alone) for anaerobic coverage."},
+        {name:"Cephalosporin allergy (low GC risk)",drugs:["Levofloxacin 500mg PO daily + Metronidazole 500mg BID x 14 days"],note:"Or moxifloxacin 400mg PO daily x 14 days (preferred for M. genitalium). Confirm GC negative before starting."},
+      ]},
+  },
   // ── CNS ──
   meningitis: {
     cat:"cns", icon:"🧠", title:"Bacterial Meningitis",

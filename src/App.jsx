@@ -138,21 +138,22 @@ const TABLES = { "peds-nonurine":PNU, "peds-urine":PU, "adult-nonurine":ANU, "ad
 // ─── SYNDROME CATEGORIES (modeled on UCSF IDMP) ────────────────────────────
 
 const SYN_CATEGORIES = [
-  { id:"skin", label:"Skin & Soft Tissue", icon:"🩹" },
-  { id:"resp", label:"Respiratory", icon:"🫁" },
-  { id:"gi", label:"GI / Intra-abdominal", icon:"🔥" },
-  { id:"gu", label:"Genitourinary", icon:"🧪" },
-  { id:"cns", label:"CNS", icon:"🧠" },
-  { id:"msk", label:"Musculoskeletal", icon:"🦴" },
-  { id:"bsi", label:"Bloodstream", icon:"🩸" },
-  { id:"ent", label:"Head & Neck / ENT", icon:"👅" },
+  { id:"skin", label:"Skin & Soft Tissue", icon:"" },
+  { id:"resp", label:"Respiratory", icon:"" },
+  { id:"gi", label:"GI / Intra-abdominal", icon:"" },
+  { id:"gu", label:"Genitourinary", icon:"" },
+  { id:"cns", label:"CNS", icon:"" },
+  { id:"msk", label:"Musculoskeletal", icon:"" },
+  { id:"bsi", label:"Bloodstream / Sepsis", icon:"" },
+  { id:"ent", label:"Head & Neck / ENT", icon:"" },
+  { id:"eye", label:"Ophthalmologic", icon:"" },
 ];
 
 // syn(key, icon, title, desc, category, pedsData, adultData)
 const SYNDROMES = {
   // ── SKIN & SOFT TISSUE ──
   abscess: {
-    cat:"skin", icon:"🩹", title:"Purulent SSTI / Abscess",
+    cat:"skin", icon:"", title:"Purulent SSTI / Abscess",
     desc:"Abscess, furuncle, carbuncle — S. aureus directed",
     peds:{ tk:"peds-nonurine", orgs:["All S. aureus","MRSA","MSSA"],
       teach:"Purulent SSTIs are predominantly S. aureus. Pediatric MRSA rate at OHSU is 22%. For uncomplicated abscess, I&D alone may suffice (IDSA). When antibiotics are needed: TMP/SMX (MRSA 94%) and clindamycin (MRSA 93%) are first-line oral MRSA agents. Clindamycin also covers streptococci. If MSSA confirmed, narrow to cephalexin (100%).",
@@ -172,7 +173,7 @@ const SYNDROMES = {
       ]},
   },
   cellulitis: {
-    cat:"skin", icon:"🔴", title:"Non-Purulent Cellulitis / Erysipelas",
+    cat:"skin", icon:"", title:"Non-Purulent Cellulitis / Erysipelas",
     desc:"No drainable focus — streptococcal coverage first-line",
     peds:{ tk:"peds-nonurine", orgs:["All S. aureus","MSSA"],
       teach:"Non-purulent cellulitis is most commonly caused by beta-hemolytic streptococci (GAS, Group B, C, G). MRSA coverage is NOT routinely needed unless purulence is present. Cephalexin is first-line. Clindamycin is an alternative for penicillin-allergic patients. Add MRSA coverage only if cellulitis fails to improve on beta-lactam therapy or if there are specific MRSA risk factors.",
@@ -191,7 +192,7 @@ const SYNDROMES = {
       ]},
   },
   bite: {
-    cat:"skin", icon:"🐕", title:"Bite Wound (Animal / Human)",
+    cat:"skin", icon:"", title:"Bite Wound (Animal / Human)",
     desc:"Polymicrobial — Pasteurella, anaerobes, strep, staph",
     peds:{ tk:"peds-nonurine", orgs:["All S. aureus"],
       teach:"Bite wounds are polymicrobial: Pasteurella (dog/cat), Eikenella (human), streptococci, anaerobes, and S. aureus. Pasteurella and Eikenella are not on the antibiogram but are susceptible to amoxicillin/clavulanate. Augmentin is the standard of care for bite wound prophylaxis and treatment — it covers the full polymicrobial spectrum. First-gen cephalosporins do NOT cover Pasteurella.",
@@ -210,7 +211,7 @@ const SYNDROMES = {
   },
   // ── RESPIRATORY ──
   cap: {
-    cat:"resp", icon:"🫁", title:"Community-Acquired Pneumonia",
+    cat:"resp", icon:"", title:"Community-Acquired Pneumonia",
     desc:"Typical and atypical pathogens",
     peds:{ tk:"peds-nonurine", orgs:["S. pneumoniae*"],
       teach:"Pediatric CAP: S. pneumoniae is the most common bacterial cause. Viral etiologies are very common, especially in young children. Amoxicillin is first-line for outpatient bacterial CAP (S. pneumoniae non-meningitis susceptibility 100%). For inpatient, ampicillin IV is first-line. Add azithromycin only if atypical pathogens suspected (Mycoplasma, Chlamydia). Ceftriaxone is reserved for complicated/empyema or failure of ampicillin.",
@@ -230,26 +231,46 @@ const SYNDROMES = {
       ]},
   },
   cf: {
-    cat:"resp", icon:"🌬️", title:"CF Pulmonary Exacerbation",
+    cat:"resp", icon:"", title:"CF Pulmonary Exacerbation",
     desc:"Pseudomonas-directed — antibiogram EXCLUDES CF isolates",
     peds:{ tk:"peds-nonurine", orgs:["P. aeruginosa"],
       teach:"CRITICAL: OHSU antibiogram EXCLUDES CF patient P. aeruginosa isolates. The numbers shown do NOT reflect CF-specific resistance, which is typically much higher due to chronic antibiotic exposure and mucoid phenotypes. Always use the patient's own prior respiratory culture data. These numbers are for reference only.",
       rx:[
-        {name:"Empiric (non-CF data)",drugs:["Cefepime + Tobramycin"],note:"⚠️ Data EXCLUDES CF isolates. Non-CF: Cefepime 97%, Tobramycin 94%. Use patient-specific cultures."},
-        {name:"Alternative",drugs:["Pip/tazo + Tobramycin"],note:"⚠️ Non-CF data: Pip/tazo 96%."},
-        {name:"Meropenem-based (restricted)",drugs:["Meropenem + Tobramycin"],note:"⚠️ Non-CF data: Meropenem 94%. Requires ID approval."},
+        {name:"Empiric (non-CF data)",drugs:["Cefepime + Tobramycin"],note:"CAUTION: Data EXCLUDES CF isolates. Non-CF: Cefepime 97%, Tobramycin 94%. Use patient-specific cultures."},
+        {name:"Alternative",drugs:["Pip/tazo + Tobramycin"],note:"CAUTION: Non-CF data: Pip/tazo 96%."},
+        {name:"Meropenem-based (restricted)",drugs:["Meropenem + Tobramycin"],note:"CAUTION: Non-CF data: Meropenem 94%. Requires ID approval."},
       ]},
     adult:{ tk:"adult-nonurine", orgs:["P. aeruginosa"],
       teach:"Same critical caveat — antibiogram EXCLUDES CF isolates. Adult CF patients often harbor highly resistant organisms. Always reference patient-specific cultures.",
       rx:[
-        {name:"Empiric (non-CF data)",drugs:["Cefepime + Tobramycin"],note:"⚠️ Non-CF data: Cefepime 89%, Tobramycin 98%."},
-        {name:"Alternative",drugs:["Pip/tazo + Tobramycin"],note:"⚠️ Non-CF data: Pip/tazo 87%."},
-        {name:"Meropenem-based (restricted)",drugs:["Meropenem + Tobramycin"],note:"⚠️ Non-CF data: Meropenem 89%. Restricted."},
+        {name:"Empiric (non-CF data)",drugs:["Cefepime + Tobramycin"],note:"CAUTION: Non-CF data: Cefepime 89%, Tobramycin 98%."},
+        {name:"Alternative",drugs:["Pip/tazo + Tobramycin"],note:"CAUTION: Non-CF data: Pip/tazo 87%."},
+        {name:"Meropenem-based (restricted)",drugs:["Meropenem + Tobramycin"],note:"CAUTION: Non-CF data: Meropenem 89%. Restricted."},
+      ]},
+  },
+  aspiration_hap: {
+    cat:"resp", icon:"", title:"Aspiration Pneumonia / HAP / VAP",
+    desc:"Healthcare-associated or aspiration — broader GNR + anaerobe coverage",
+    peds:{ tk:"peds-nonurine", orgs:["E. coli","P. aeruginosa","All S. aureus","E. cloacae*"],
+      teach:"Aspiration pneumonia: oral anaerobes + GNRs. Community-acquired aspiration in children often follows neurologic events, seizures, or anatomic abnormalities. Ampicillin/sulbactam or clindamycin covers oral anaerobes well. Hospital-acquired pneumonia (HAP) developing ≥48h after admission requires broader coverage for resistant GNRs (Pseudomonas, Enterobacter) and MRSA. VAP follows similar principles. Key: early-onset HAP (<5 days) may have community pathogens; late-onset HAP (≥5 days) more likely resistant organisms.",
+      rx:[
+        {name:"Community aspiration",drugs:["Ampicillin/sulbactam (IV) or Clindamycin"],note:"Covers oral anaerobes + streptococci. Clindamycin: alternative for PCN allergy."},
+        {name:"HAP (early onset, no MDR risk)",drugs:["Ceftriaxone ± Vancomycin"],note:"Ceftriaxone: E. coli 85%. Add vancomycin if MRSA risk factors."},
+        {name:"HAP/VAP (late onset or MDR risk)",drugs:["Cefepime + Vancomycin ± Metronidazole"],note:"Cefepime: Pseudomonas 97%, E. coli 93%. Vancomycin: MRSA 100%. Metronidazole for aspiration component."},
+        {name:"Severe / prior resistant organisms",drugs:["Meropenem (restricted) + Vancomycin"],note:"Meropenem: Pseudomonas 94%, E. coli 100%. For ESBL or AmpC-producing organisms."},
+      ]},
+    adult:{ tk:"adult-nonurine", orgs:["E. coli","P. aeruginosa","All S. aureus","K. pneumoniae","E. cloacae*"],
+      teach:"Aspiration pneumonia: anaerobes + GNRs. Note: recent evidence questions the traditional role of anaerobes in many cases of aspiration — some guidelines now suggest anaerobic coverage is less critical than previously thought. HAP/VAP: IDSA 2016 guidelines recommend empiric MRSA coverage + anti-pseudomonal agent for HAP/VAP with risk factors for MDR organisms (prior IV antibiotics within 90 days, ≥5 days hospitalized, septic shock, ARDS, prior MDR colonization). Adult MRSA rate is 42% — empiric MRSA coverage warranted for most HAP.",
+      rx:[
+        {name:"Community aspiration",drugs:["Ampicillin/sulbactam (IV)"],note:"Covers oral anaerobes + streptococci + many GNRs."},
+        {name:"HAP (no MDR risk factors)",drugs:["Ceftriaxone or Cefepime"],note:"Ceftriaxone: E. coli 84%. Cefepime: E. coli 91%, Pseudomonas 89%."},
+        {name:"HAP/VAP (MDR risk factors)",drugs:["Cefepime + Vancomycin"],note:"Cefepime: Pseudomonas 89%. Vancomycin: MRSA 100%."},
+        {name:"HAP/VAP (severe / shock)",drugs:["Meropenem (restricted) + Vancomycin"],note:"Meropenem: E. coli 100%, Pseudomonas 89%. Broadest coverage."},
       ]},
   },
   // ── GI / INTRA-ABDOMINAL ──
   appendicitis: {
-    cat:"gi", icon:"🔥", title:"Appendicitis",
+    cat:"gi", icon:"", title:"Appendicitis",
     desc:"Polymicrobial GNR + anaerobic coverage",
     peds:{ tk:"peds-nonurine", orgs:["E. coli","P. aeruginosa"],
       teach:"Appendicitis is polymicrobial: aerobic GNRs (primarily E. coli) plus anaerobes (B. fragilis — not on antibiogram). Pip/tazo covers both. Alternatively, ceftriaxone + metronidazole. For complicated/perforated cases, broader coverage including Pseudomonas.",
@@ -267,7 +288,7 @@ const SYNDROMES = {
       ]},
   },
   peritonitis: {
-    cat:"gi", icon:"💧", title:"Secondary Peritonitis / Intra-abdominal Infection",
+    cat:"gi", icon:"", title:"Secondary Peritonitis / Intra-abdominal Infection",
     desc:"Bowel perforation, diverticulitis — polymicrobial",
     peds:{ tk:"peds-nonurine", orgs:["E. coli","P. aeruginosa","E. cloacae*"],
       teach:"Secondary peritonitis shares the same polymicrobial profile as appendicitis — GNRs plus anaerobes. Coverage principles are identical. For healthcare-associated infections, consider broader GNR coverage including Pseudomonas and resistant Enterobacteriaceae.",
@@ -286,7 +307,7 @@ const SYNDROMES = {
   },
   // ── GENITOURINARY ──
   uti: {
-    cat:"gu", icon:"🧪", title:"Urinary Tract Infection",
+    cat:"gu", icon:"", title:"Urinary Tract Infection",
     desc:"Cystitis and pyelonephritis — uses urine antibiogram",
     peds:{ tk:"peds-urine", orgs:["E. coli","K. pneumoniae*","P. mirabilis*"],
       teach:"E. coli causes ~80% of pediatric UTIs. Cephalexin/cefazolin first-line for cystitis (E. coli 92%). TMP/SMX at 75% is below ideal. Nitrofurantoin (98%) excellent for cystitis but has no renal tissue levels — never for pyelonephritis. For febrile UTI/pyelonephritis requiring admission: ceftriaxone (95%). For outpatient pyelonephritis: the COPY-ED study (Koehl et al., Ann Emerg Med 2025) demonstrated oral cephalosporins had similar treatment failure rates to fluoroquinolones/TMP-SMX — most patients received a single dose of IV ceftriaxone in the ED before discharge with oral step-down. Cephalexin 500mg BID appears non-inferior to QID dosing for UTIs (AJEM 2025), improving adherence.",
@@ -311,7 +332,7 @@ const SYNDROMES = {
   },
   // ── STI ──
   gc_ct: {
-    cat:"gu", icon:"🔬", title:"Gonorrhea / Chlamydia (Urethritis / Cervicitis)",
+    cat:"gu", icon:"", title:"Gonorrhea / Chlamydia (Urethritis / Cervicitis)",
     desc:"CDC 2021 guidelines — ceftriaxone IM + doxycycline",
     peds:{ tk:"peds-nonurine", orgs:[],
       teach:"N. gonorrhoeae and C. trachomatis are not on the OHSU antibiogram — they require specialized susceptibility testing. CDC 2021 guidelines are the standard. Key 2021 changes: dual therapy (ceftriaxone + azithromycin) is NO LONGER recommended for all patients — ceftriaxone monotherapy is now standard for gonorrhea due to azithromycin resistance concerns. Add doxycycline only if chlamydia has not been excluded. In adolescents, doxycycline is preferred over azithromycin for chlamydia based on superior efficacy, especially at extragenital (rectal) sites. Note: ciprofloxacin is restricted in peds and should not be used for gonococcal infections in children.",
@@ -331,7 +352,7 @@ const SYNDROMES = {
       ]},
   },
   pid: {
-    cat:"gu", icon:"🩺", title:"Pelvic Inflammatory Disease",
+    cat:"gu", icon:"", title:"Pelvic Inflammatory Disease",
     desc:"Polymicrobial — GC, CT, anaerobes, M. genitalium",
     peds:{ tk:"peds-nonurine", orgs:["E. coli"],
       teach:"PID in adolescents follows the same CDC 2021 treatment guidelines as adults. Key 2021 change: metronidazole is now RECOMMENDED (not optional) in all PID regimens to provide anaerobic coverage, based on an RCT (Wiesenfeld et al., CID 2021) showing improved endometrial anaerobe eradication without reduced adherence. Mild-to-moderate PID can be treated outpatient (PEACH study). Hospitalize for: tubo-ovarian abscess, pregnancy, severe illness/vomiting, failure of outpatient therapy at 72h, or inability to follow outpatient regimen. M. genitalium is increasingly recognized in PID — test if available, treat with doxycycline first-line pending susceptibility.",
@@ -354,7 +375,7 @@ const SYNDROMES = {
   },
   // ── CNS ──
   meningitis: {
-    cat:"cns", icon:"🧠", title:"Bacterial Meningitis",
+    cat:"cns", icon:"", title:"Bacterial Meningitis",
     desc:"Empiric coverage by age — meningitis breakpoints apply",
     peds:{ tk:"peds-nonurine", orgs:["S. pneumoniae*","E. coli"],
       teach:"Meningitis breakpoints are STRICTER than non-meningitis — a different susceptibility standard. For neonates (<1 month): ampicillin (Listeria, GBS) + cefotaxime or gentamicin (E. coli, GNR). For infants/children (>1 month): ceftriaxone + vancomycin empirically. S. pneumoniae meningitis breakpoint susceptibility is 98% at OHSU. Always add dexamethasone for suspected pneumococcal meningitis (before or with first antibiotic dose). Acyclovir if HSV suspected.",
@@ -373,7 +394,7 @@ const SYNDROMES = {
   },
   // ── MSK ──
   septic_joint: {
-    cat:"msk", icon:"🦴", title:"Septic Arthritis / Osteomyelitis",
+    cat:"msk", icon:"", title:"Septic Arthritis / Osteomyelitis",
     desc:"S. aureus predominates — age-dependent etiology",
     peds:{ tk:"peds-nonurine", orgs:["All S. aureus","MRSA","MSSA"],
       teach:"S. aureus is the most common cause of septic arthritis and osteomyelitis in children. Kingella kingae is important in children <5 years (susceptible to cephalosporins; not on antibiogram). Empiric coverage should include anti-staphylococcal therapy. With MRSA rate of 22%, cefazolin is reasonable first-line unless MRSA risk factors present. Surgical source control (aspiration/washout) is essential for septic arthritis.",
@@ -391,29 +412,101 @@ const SYNDROMES = {
         {name:"Prosthetic joint (empiric)",drugs:["Vancomycin + Cefepime"],note:"Broad coverage pending operative cultures. ID consult recommended."},
       ]},
   },
-  // ── BLOODSTREAM ──
+  open_fracture: {
+    cat:"msk", icon:"", title:"Open Fracture Antibiotic Prophylaxis",
+    desc:"Gustilo classification guides coverage — cefazolin ± gentamicin",
+    peds:{ tk:"peds-nonurine", orgs:["All S. aureus","MSSA","E. coli"],
+      teach:"Open fracture antibiotic prophylaxis is classified by Gustilo-Anderson grade. Grade I (<1cm wound, minimal contamination): cefazolin alone. Grade II (1–10cm, moderate soft tissue damage): cefazolin. Grade III (>10cm, extensive damage, vascular injury, farmyard/water contamination): cefazolin + gentamicin. Add metronidazole or penicillin for farmyard/soil contamination (Clostridium risk). Antibiotics should be given within 1 hour of presentation. Duration: typically 24h for Grade I/II, 72h or until wound closure for Grade III. Tetanus prophylaxis per immunization status. Orthopedic consultation for all open fractures.",
+      rx:[
+        {name:"Gustilo I–II",drugs:["Cefazolin (IV)"],note:"MSSA 100%. Standard prophylaxis. Give within 1 hour. Duration: 24h."},
+        {name:"Gustilo III",drugs:["Cefazolin + Gentamicin (IV)"],note:"Add gentamicin for GNR coverage. E. coli: gentamicin 93%. Duration: 72h or until wound closure."},
+        {name:"Farmyard / soil contamination",drugs:["Cefazolin + Gentamicin + Metronidazole"],note:"Add metronidazole for Clostridium coverage. Or add high-dose penicillin."},
+        {name:"PCN/cephalosporin allergy",drugs:["Clindamycin ± Gentamicin"],note:"Clindamycin: S. aureus 88%. Add gentamicin for Grade III."},
+      ]},
+    adult:{ tk:"adult-nonurine", orgs:["All S. aureus","MSSA","E. coli"],
+      teach:"Same Gustilo-Anderson classification. Higher adult MRSA rate (42%) does not change prophylaxis — cefazolin remains standard because the primary target is MSSA and streptococci in clean wounds. MRSA prophylaxis (vancomycin) is NOT routinely recommended for open fractures unless specific MRSA risk factors. Some centers add vancomycin for Grade IIIB/C, but evidence is limited.",
+      rx:[
+        {name:"Gustilo I–II",drugs:["Cefazolin (IV)"],note:"MSSA 100%. Give within 1 hour. 24h duration."},
+        {name:"Gustilo III",drugs:["Cefazolin + Gentamicin"],note:"Gentamicin: E. coli 88%. 72h or until definitive closure."},
+        {name:"Farmyard / soil / water",drugs:["Cefazolin + Gentamicin + Metronidazole"],note:"Clostridium coverage. High-dose penicillin is an alternative to metronidazole."},
+        {name:"PCN allergy",drugs:["Clindamycin ± Gentamicin"],note:"Clindamycin: S. aureus 85%. Vancomycin if severe allergy and MRSA concern."},
+      ]},
+  },
+  // ── BLOODSTREAM / SEPSIS ──
+  febrile_neonate: {
+    cat:"bsi", icon:"", title:"Febrile Neonate / Young Infant (<60 days)",
+    desc:"Age-stratified empiric coverage — high-stakes workup",
+    peds:{ tk:"peds-nonurine", orgs:["E. coli","All S. aureus"],
+      teach:"Febrile infants <60 days require structured risk stratification. Pathogens by age: 0–28 days — GBS, E. coli, Listeria, HSV; 29–60 days — GBS, E. coli, S. pneumoniae, enterovirus. Classic empiric: ampicillin + gentamicin. Ampicillin covers GBS and Listeria; aminoglycoside covers GNRs. HSV evaluation: consider acyclovir for neonates <21 days with fever, ill appearance, vesicles, seizures, CSF pleocytosis, or maternal HSV. For well-appearing 29–60 day infants, newer risk tools (PECARN, step-by-step) can guide management but require clinical judgment and reliable follow-up. UTI is the most common SBI in this age group — always obtain catheterized UA/culture.",
+      rx:[
+        {name:"Neonate 0–28 days (all)",drugs:["Ampicillin + Gentamicin"],note:"Covers GBS, Listeria, E. coli. Gentamicin: E. coli 93%. Avoid ceftriaxone <28 days (bilirubin displacement)."},
+        {name:"0–21 days + HSV risk",drugs:["Ampicillin + Gentamicin + Acyclovir"],note:"HSV triggers: maternal HSV, vesicles, seizures, CSF pleocytosis, elevated AST/ALT, ill appearance."},
+        {name:"29–60 days (ill-appearing)",drugs:["Ampicillin + Ceftriaxone ± Vancomycin"],note:"Ceftriaxone: E. coli 85%, S. pneumoniae 100%. Full sepsis workup including LP."},
+        {name:"29–60 days (well, low-risk)",drugs:["Ceftriaxone IM x1 ± observation"],note:"Per PECARN/step-by-step risk stratification. Requires reliable 24h follow-up."},
+        {name:"29–60 days (UTI identified)",drugs:["Ceftriaxone (IV/IM)"],note:"Most common SBI. E. coli 85%. Transition to PO cephalexin per culture."},
+      ]},
+    adult:{ tk:"adult-nonurine", orgs:[],
+      teach:"Pediatric-specific syndrome. See Sepsis / Bacteremia pathway for adult undifferentiated fever.",
+      rx:[{name:"See Sepsis pathway",drugs:["N/A — pediatric-specific"],note:"For adult undifferentiated sepsis, use the Sepsis / Bacteremia pathway."}]},
+  },
   sepsis: {
-    cat:"bsi", icon:"🩸", title:"Sepsis / Bacteremia (Unknown Source)",
+    cat:"bsi", icon:"", title:"Sepsis / Bacteremia (Unknown Source)",
     desc:"Broad empiric coverage pending cultures",
     peds:{ tk:"peds-nonurine", orgs:["E. coli","All S. aureus","P. aeruginosa"],
-      teach:"Empiric sepsis coverage depends on age, suspected source, and risk factors. For neonates: ampicillin + gentamicin (or cefotaxime). For older infants/children without clear source: ceftriaxone + vancomycin provides broad GNR + GPC coverage. Add Pseudomonas coverage for immunocompromised or healthcare-associated infections.",
+      teach:"For neonates: see Febrile Neonate pathway. For older infants/children: ceftriaxone + vancomycin provides broad GNR + GPC coverage. Add Pseudomonas coverage (cefepime) for immunocompromised or healthcare-associated infections.",
       rx:[
-        {name:"Neonate (<28 days)",drugs:["Ampicillin + Gentamicin"],note:"Covers GBS, E. coli, Listeria. Gentamicin: E. coli 93%."},
         {name:"Infant/Child (community)",drugs:["Ceftriaxone + Vancomycin"],note:"Ceftriaxone: E. coli 85%. Vancomycin: S. aureus 100%."},
-        {name:"Healthcare-associated / Immunocompromised",drugs:["Cefepime + Vancomycin"],note:"Cefepime: E. coli 93%, Pseudomonas 97%. Vancomycin: S. aureus 100%."},
-        {name:"Neutropenic fever",drugs:["Cefepime (monotherapy)"],note:"Cefepime 97% Pseudomonas, 93% E. coli. Add vancomycin per institutional criteria."},
+        {name:"Healthcare-associated",drugs:["Cefepime + Vancomycin"],note:"Cefepime: E. coli 93%, Pseudomonas 97%."},
       ]},
     adult:{ tk:"adult-nonurine", orgs:["E. coli","All S. aureus","P. aeruginosa","K. pneumoniae"],
-      teach:"Broad empiric approach. Vancomycin for MRSA (42% rate). Cefepime or pip/tazo for GNR coverage. Source-directed narrowing is essential once cultures and imaging clarify the picture.",
+      teach:"Vancomycin for MRSA (42%). Cefepime or pip/tazo for GNR. Source-directed narrowing once cultures clarify.",
       rx:[
         {name:"Community-acquired",drugs:["Ceftriaxone + Vancomycin"],note:"Ceftriaxone: E. coli 84%. Vancomycin: S. aureus 100%."},
         {name:"Healthcare-associated",drugs:["Cefepime + Vancomycin"],note:"Cefepime: E. coli 91%, Pseudomonas 89%."},
-        {name:"Severe / Shock",drugs:["Meropenem (restricted) + Vancomycin"],note:"Meropenem: E. coli 100%, Pseudomonas 89%. Broadest empiric GNR coverage."},
+        {name:"Severe / Shock",drugs:["Meropenem (restricted) + Vancomycin"],note:"Meropenem: E. coli 100%, Pseudomonas 89%."},
+      ]},
+  },
+  febrile_neutropenia: {
+    cat:"bsi", icon:"", title:"Febrile Neutropenia",
+    desc:"Oncology emergency — cefepime monotherapy, escalate per risk",
+    peds:{ tk:"peds-nonurine", orgs:["E. coli","P. aeruginosa","All S. aureus"],
+      teach:"ANC <500 + fever ≥38.3°C x1 or ≥38.0°C sustained x1h = oncologic emergency. Cefepime monotherapy is standard (anti-pseudomonal + broad GNR). Add vancomycin for: hemodynamic instability, mucositis, catheter infection, skin infection, GPC on blood culture, or prior MRSA. Do NOT routinely add vancomycin for fever alone. Antifungal coverage (caspofungin) typically added if fever persists >4–7 days. Follow OHSU DCH oncology-specific protocols.",
+      rx:[
+        {name:"Standard empiric",drugs:["Cefepime monotherapy"],note:"Pseudomonas 97%, E. coli 93%. IDSA standard."},
+        {name:"+ Vancomycin indications",drugs:["Cefepime + Vancomycin"],note:"Add for: instability, mucositis, catheter infection, skin infection, GPC on culture, prior MRSA."},
+        {name:"Persistent fever >4–7 days",drugs:["Cefepime ± Vancomycin + Antifungal"],note:"Caspofungin or liposomal amphotericin B. ID consult."},
+        {name:"Cephalosporin allergy",drugs:["Meropenem (restricted)"],note:"Pseudomonas 94%, E. coli 100%. ID approval required."},
+      ]},
+    adult:{ tk:"adult-nonurine", orgs:["E. coli","P. aeruginosa","All S. aureus","K. pneumoniae"],
+      teach:"Same IDSA framework. Cefepime or pip/tazo monotherapy standard. Adult MRSA rate 42% lowers threshold for vancomycin. MASCC score can risk-stratify, but outpatient management is uncommon in practice.",
+      rx:[
+        {name:"Standard empiric",drugs:["Cefepime monotherapy"],note:"Pseudomonas 89%, E. coli 91%. Or pip/tazo: Pseudomonas 87%, E. coli 94%."},
+        {name:"+ Vancomycin",drugs:["Cefepime + Vancomycin"],note:"Same indications. Adult MRSA 42% — lower threshold."},
+        {name:"Persistent fever",drugs:["Escalate ± Antifungal"],note:"Caspofungin. ID consult."},
+        {name:"Severe allergy",drugs:["Meropenem (restricted) or Aztreonam + Vancomycin"],note:"Aztreonam covers GNR without beta-lactam cross-reactivity."},
+      ]},
+  },
+  crbsi: {
+    cat:"bsi", icon:"", title:"Catheter-Related Bloodstream Infection",
+    desc:"Central line — vancomycin + GNR coverage",
+    peds:{ tk:"peds-nonurine", orgs:["All S. aureus","MRSA","E. coli","P. aeruginosa"],
+      teach:"CRBSI pathogens: CoNS (most common), S. aureus, GNRs, Enterococcus, Candida. Empiric: vancomycin (MRSA + CoNS) + anti-pseudomonal. Draw cultures from line AND peripherally — differential time to positivity >2h suggests line source. Remove line for S. aureus, Pseudomonas, and Candida. CoNS may allow line salvage with antibiotic lock therapy.",
+      rx:[
+        {name:"Empiric",drugs:["Vancomycin + Cefepime"],note:"Vancomycin: MRSA 100%. Cefepime: E. coli 93%, Pseudomonas 97%."},
+        {name:"Candida suspected",drugs:["Add Caspofungin"],note:"TPN, prolonged antibiotics, immunosuppression = Candida risk. Remove line. ID consult."},
+        {name:"Confirmed CoNS",drugs:["Vancomycin ± line salvage"],note:"Antibiotic lock therapy may allow salvage for CoNS. Remove for S. aureus, Pseudomonas, Candida."},
+      ]},
+    adult:{ tk:"adult-nonurine", orgs:["All S. aureus","MRSA","E. coli","P. aeruginosa"],
+      teach:"Same pathogens. S. epidermidis cefazolin susceptibility only 29% — vancomycin is essential for CoNS. Always draw paired cultures. IDSA: remove line for S. aureus, Pseudomonas, Candida.",
+      rx:[
+        {name:"Empiric",drugs:["Vancomycin + Cefepime"],note:"Cefepime: E. coli 91%, Pseudomonas 89%."},
+        {name:"Severe / Shock",drugs:["Vancomycin + Meropenem (restricted)"],note:"Meropenem: E. coli 100%, Pseudomonas 89%."},
+        {name:"Candida suspected",drugs:["Add Caspofungin"],note:"Remove line. ID consult for candidemia workup."},
       ]},
   },
   // ── HEAD & NECK / ENT ──
   pharyngitis: {
-    cat:"ent", icon:"👅", title:"Pharyngitis / Tonsillitis",
+    cat:"ent", icon:"", title:"Pharyngitis / Tonsillitis",
     desc:"GAS pharyngitis and peritonsillar abscess",
     peds:{ tk:"peds-nonurine", orgs:["S. pneumoniae*"],
       teach:"GAS (S. pyogenes) is universally penicillin-susceptible — no antibiogram needed. S. pneumoniae shown as closest streptococcal reference. For peritonsillar abscess: mixed flora (GAS + oral anaerobes ± S. aureus). Do NOT use azithromycin empirically for GAS — erythromycin (surrogate) only 69% for S. pneumoniae locally.",
@@ -433,7 +526,7 @@ const SYNDROMES = {
       ]},
   },
   aom: {
-    cat:"ent", icon:"👂", title:"Acute Otitis Media",
+    cat:"ent", icon:"", title:"Acute Otitis Media",
     desc:"S. pneumoniae, H. influenzae, Moraxella",
     peds:{ tk:"peds-nonurine", orgs:["S. pneumoniae*"],
       teach:"AOM: S. pneumoniae, non-typeable H. influenzae, Moraxella catarrhalis. H. influenzae and Moraxella are not on the antibiogram. High-dose amoxicillin (80–90 mg/kg/day) is first-line — achieves middle ear levels above the pneumococcal MIC. Amoxicillin/clavulanate for treatment failure or beta-lactamase producing organisms. Observation without antibiotics is appropriate for mild AOM in children ≥2 years.",
@@ -451,7 +544,7 @@ const SYNDROMES = {
       ]},
   },
   sinusitis: {
-    cat:"ent", icon:"🤧", title:"Acute Bacterial Sinusitis",
+    cat:"ent", icon:"", title:"Acute Bacterial Sinusitis",
     desc:"S. pneumoniae, H. influenzae, Moraxella",
     peds:{ tk:"peds-nonurine", orgs:["S. pneumoniae*"],
       teach:"Same pathogen profile as AOM. Most sinusitis is viral — bacterial sinusitis diagnosed by ≥10 days of symptoms without improvement, severe onset (≥3 days high fever + purulent discharge), or worsening after initial improvement. Amoxicillin/clavulanate is first-line (preferred over amoxicillin alone to cover beta-lactamase producing H. influenzae).",
@@ -466,6 +559,28 @@ const SYNDROMES = {
         {name:"First-line",drugs:["Amoxicillin/clavulanate (PO)"],note:"S. pneumoniae: penicillin 93%."},
         {name:"PCN allergy",drugs:["Doxycycline (PO)"],note:"Reasonable alternative in adults."},
         {name:"Treatment failure",drugs:["Levofloxacin (PO)"],note:"Respiratory fluoroquinolone. Reserve for failures."},
+      ]},
+  },
+  // ── OPHTHALMOLOGIC ──
+  periorbital: {
+    cat:"eye", icon:"", title:"Periorbital / Orbital Cellulitis",
+    desc:"Preseptal vs. postseptal — critical distinction",
+    peds:{ tk:"peds-nonurine", orgs:["All S. aureus","MRSA","MSSA","S. pneumoniae*"],
+      teach:"CRITICAL DISTINCTION: Preseptal (periorbital) cellulitis is anterior to the orbital septum — treated with oral antibiotics, generally safe. Postseptal (orbital) cellulitis is a surgical emergency with risk of vision loss, cavernous sinus thrombosis, and intracranial extension. CT orbits with contrast is mandatory if orbital cellulitis suspected (proptosis, ophthalmoplegia, pain with eye movement, decreased visual acuity, afferent pupillary defect). Preseptal pathogens: S. aureus, Strep, H. influenzae. Orbital pathogens: often polymicrobial from sinusitis extension — S. pneumoniae, H. influenzae, Moraxella, anaerobes, S. aureus. Ophthalmology and ENT consultation for orbital cellulitis.",
+      rx:[
+        {name:"Preseptal (mild, no MRSA risk)",drugs:["Amoxicillin/clavulanate (PO)"],note:"Covers S. aureus, Strep, H. influenzae. Adequate for uncomplicated preseptal cellulitis."},
+        {name:"Preseptal (MRSA risk or failed PO)",drugs:["Clindamycin (PO) or TMP/SMX + Amoxicillin"],note:"Clindamycin: S. aureus 88%, MRSA 93%. TMP/SMX: MRSA 94% (add amoxicillin for Strep coverage)."},
+        {name:"Preseptal (IV needed)",drugs:["Cefazolin ± Clindamycin or Vancomycin"],note:"Cefazolin: MSSA 100%. Add vancomycin or clindamycin if MRSA concern."},
+        {name:"Orbital cellulitis (postseptal)",drugs:["Vancomycin + Ceftriaxone + Metronidazole"],note:"Broad coverage: MRSA (100%), GNR, S. pneumoniae (100%), anaerobes from sinusitis. Urgent ophth + ENT consult. CT orbits."},
+        {name:"Orbital (alternative)",drugs:["Vancomycin + Ampicillin/sulbactam"],note:"Amp/sulbactam covers GNR + anaerobes + strep. Add vancomycin for MRSA."},
+      ]},
+    adult:{ tk:"adult-nonurine", orgs:["All S. aureus","MRSA","MSSA","S. pneumoniae"],
+      teach:"Same preseptal vs. postseptal distinction. Adult MRSA rate 42% — higher threshold for MRSA coverage in preseptal cases. Orbital cellulitis in adults is commonly from sinusitis extension. Same urgent ophthalmology and ENT consultation. CT orbits with contrast is essential.",
+      rx:[
+        {name:"Preseptal (mild)",drugs:["Amoxicillin/clavulanate (PO)"],note:"Covers typical preseptal pathogens."},
+        {name:"Preseptal (MRSA risk)",drugs:["TMP/SMX + Amoxicillin/clavulanate or Clindamycin"],note:"TMP/SMX: MRSA 92%. Clindamycin: MRSA 86%."},
+        {name:"Orbital cellulitis",drugs:["Vancomycin + Ceftriaxone + Metronidazole"],note:"MRSA 100%. Ceftriaxone: S. pneumoniae 91%. Metronidazole for sinus anaerobes. Urgent ophth + ENT."},
+        {name:"Orbital (alternative)",drugs:["Vancomycin + Ampicillin/sulbactam"],note:"Broad aerobic + anaerobic coverage."},
       ]},
   },
 };
@@ -593,8 +708,8 @@ export default function App(){
           <p style={{fontSize:12,color:V.tx4,marginTop:2}}>Interactive Susceptibility Guide · 2024 Data</p>
         </div>
         <div style={{display:"flex",gap:8,alignItems:"center"}}>
-          <Btn V={V} onClick={()=>setDk(!dk)}>{dk?"☀️":"🌙"}</Btn>
-          <Btn V={V} active={learn} onClick={()=>setLearn(!learn)}>{learn?"📖 ON":"📕 Learner"}</Btn>
+          <Btn V={V} onClick={()=>setDk(!dk)}>{dk?"Light":"Dark"}</Btn>
+          <Btn V={V} active={learn} onClick={()=>setLearn(!learn)}>{learn?"Learner ON":"Learner OFF"}</Btn>
           {table&&entry==="organism"&&<Btn V={V} onClick={()=>setView(view==="wiz"?"tbl":"wiz")}>{view==="wiz"?"▦ Table":"◉ Wizard"}</Btn>}
         </div>
       </div></header>
@@ -605,16 +720,16 @@ export default function App(){
         {/* STEP 1: POPULATION */}
         {!pop&&<Fade>
           <SL>Select Patient Population</SL>
-          <G2><SC V={V} i="👶" t="Pediatric" d="Doernbecher Children's Hospital" onClick={()=>setPop("peds")}/><SC V={V} i="🧑" t="Adult" d="OHSU Adult Hospital" onClick={()=>setPop("adult")}/></G2>
-          {learn&&<Tch V={V}>💡 <b>Why population matters:</b> MRSA rate is 22% in peds vs. 42% in adults.</Tch>}
+          <G2><SC V={V} i="" t="Pediatric" d="Doernbecher Children's Hospital" onClick={()=>setPop("peds")}/><SC V={V} i="" t="Adult" d="OHSU Adult Hospital" onClick={()=>setPop("adult")}/></G2>
+          {learn&&<Tch V={V}><b>Why population matters:</b> MRSA rate is 22% in peds vs. 42% in adults.</Tch>}
         </Fade>}
 
         {/* STEP 2: ENTRY MODE */}
         {pop&&!entry&&<Fade>
           <Bk V={V} onClick={()=>setPop(null)}/>
           <SL>How do you want to look up coverage?</SL>
-          <G2><SC V={V} i="🩺" t="By Clinical Syndrome" d="Appendicitis, UTI, pneumonia, etc." onClick={()=>setEntry("syndrome")}/><SC V={V} i="🦠" t="By Organism" d="Look up a specific pathogen" onClick={()=>setEntry("organism")}/></G2>
-          {learn&&<Tch V={V}>💡 <b>Syndrome vs. Organism:</b> Syndrome pathway maps ED presentations to likely pathogens and empiric regimens. Organism pathway for when you know the specific bug.</Tch>}
+          <G2><SC V={V} i="" t="By Clinical Syndrome" d="Appendicitis, UTI, pneumonia, etc." onClick={()=>setEntry("syndrome")}/><SC V={V} i="" t="By Organism" d="Look up a specific pathogen" onClick={()=>setEntry("organism")}/></G2>
+          {learn&&<Tch V={V}><b>Syndrome vs. Organism:</b> Syndrome pathway maps ED presentations to likely pathogens and empiric regimens. Organism pathway for when you know the specific bug.</Tch>}
         </Fade>}
 
         {/* ═══ SYNDROME PATHWAY ═══ */}
@@ -626,7 +741,6 @@ export default function App(){
             {SYN_CATEGORIES.map(c=><button key={c.id} onClick={()=>setSynCat(c.id)} style={{display:"flex",alignItems:"center",gap:10,padding:"14px 16px",background:V.bg2,border:`1px solid ${V.bd2}`,borderRadius:10,cursor:"pointer",fontFamily:"inherit",color:"inherit",textAlign:"left",transition:"all .2s"}}
               onMouseEnter={e=>{e.currentTarget.style.borderColor=V.ac;e.currentTarget.style.background=V.acBg;}}
               onMouseLeave={e=>{e.currentTarget.style.borderColor=V.bd2;e.currentTarget.style.background=V.bg2;}}>
-              <span style={{fontSize:24}}>{c.icon}</span>
               <span style={{fontSize:13,fontWeight:600}}>{c.label}</span>
             </button>)}
           </div>
@@ -635,12 +749,11 @@ export default function App(){
         {/* Syndrome select within category */}
         {pop&&entry==="syndrome"&&synCat&&!syn&&<Fade>
           <Bk V={V} onClick={()=>setSynCat(null)} label="Back to categories"/>
-          <SL>{SYN_CATEGORIES.find(c=>c.id===synCat)?.icon} {SYN_CATEGORIES.find(c=>c.id===synCat)?.label}</SL>
+          <SL>{SYN_CATEGORIES.find(c=>c.id===synCat)?.label}</SL>
           <div style={{display:"flex",flexDirection:"column",gap:8}}>
             {catSyndromes.map(([k,si])=><button key={k} onClick={()=>setSyn(k)} style={{display:"flex",alignItems:"center",gap:14,padding:"16px 18px",background:V.bg2,border:`1px solid ${V.bd2}`,borderRadius:10,cursor:"pointer",fontFamily:"inherit",color:"inherit",textAlign:"left",transition:"all .2s"}}
               onMouseEnter={e=>{e.currentTarget.style.borderColor=V.ac;e.currentTarget.style.background=V.acBg;}}
               onMouseLeave={e=>{e.currentTarget.style.borderColor=V.bd2;e.currentTarget.style.background=V.bg2;}}>
-              <span style={{fontSize:28,flexShrink:0}}>{si.icon}</span>
               <div style={{display:"flex",flexDirection:"column",gap:2}}>
                 <span style={{fontSize:14,fontWeight:700}}>{si.title}</span>
                 <span style={{fontSize:12,color:V.tx4}}>{si.desc}</span>
@@ -652,14 +765,11 @@ export default function App(){
         {/* Syndrome detail */}
         {pop&&entry==="syndrome"&&syn&&synData&&<Fade>
           <Bk V={V} onClick={()=>setSyn(null)} label="Back to conditions"/>
-          <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:16}}>
-            <span style={{fontSize:28}}>{synInfo.icon}</span>
-            <div>
-              <h2 style={{fontSize:20,fontWeight:700,margin:0}}>{synInfo.title}</h2>
-              <p style={{fontSize:12,color:V.tx4,marginTop:2}}>{pop==="peds"?"Pediatric":"Adult"} · {synInfo.desc}</p>
-            </div>
+          <div style={{marginBottom:16}}>
+            <h2 style={{fontSize:20,fontWeight:700,margin:0}}>{synInfo.title}</h2>
+            <p style={{fontSize:12,color:V.tx4,marginTop:2}}>{pop==="peds"?"Pediatric":"Adult"} · {synInfo.desc}</p>
           </div>
-          {learn&&<Tch V={V} style={{marginBottom:16}}>📖 <b>Clinical Context</b><br/>{synData.teach}</Tch>}
+          {learn&&<Tch V={V} style={{marginBottom:16}}><b>Clinical Context</b><br/>{synData.teach}</Tch>}
 
           <SecL V={V}>Empiric Regimens</SecL>
           {synData.rx.map((r,i)=><div key={i} style={{padding:"14px 16px",background:V.bg2,border:`1px solid ${V.bd2}`,borderRadius:10,marginBottom:8}}>
@@ -687,11 +797,11 @@ export default function App(){
           </div>)}
 
           <NB V={V}>
-            <p style={{fontWeight:700,marginBottom:6}}>📋 Important Notes</p>
+            <p style={{fontWeight:700,marginBottom:6}}>Important Notes</p>
             <p>• Always narrow therapy based on culture & sensitivity.</p>
             <p>• Regimens shown are empiric starting points.</p>
             <p>• ID pharmacist: pager 16695.</p>
-            {syn==="cf"&&<p style={{fontWeight:700}}>• ⚠️ Antibiogram EXCLUDES CF P. aeruginosa isolates.</p>}
+            {syn==="cf"&&<p style={{fontWeight:700}}>• CAUTION: Antibiogram EXCLUDES CF P. aeruginosa isolates.</p>}
           </NB>
         </Fade>}
 
@@ -699,8 +809,8 @@ export default function App(){
         {pop&&entry==="organism"&&!src&&<Fade>
           <Bk V={V} onClick={()=>setEntry(null)}/>
           <SL>Select Infection Source</SL>
-          <G2><SC V={V} i="🩸" t="Non-Urine" d="Blood, wound, respiratory, CSF" onClick={()=>setSrc("nonurine")}/><SC V={V} i="🧪" t="Urine" d="Urinary tract isolates only" onClick={()=>setSrc("urine")}/></G2>
-          {learn&&<Tch V={V}>💡 <b>Separate urine data:</b> Drug concentrations in urine differ from serum. Nitrofurantoin only works in urine.</Tch>}
+          <G2><SC V={V} i="" t="Non-Urine" d="Blood, wound, respiratory, CSF" onClick={()=>setSrc("nonurine")}/><SC V={V} i="" t="Urine" d="Urinary tract isolates only" onClick={()=>setSrc("urine")}/></G2>
+          {learn&&<Tch V={V}><b>Separate urine data:</b> Drug concentrations in urine differ from serum. Nitrofurantoin only works in urine.</Tch>}
         </Fade>}
 
         {table&&entry==="organism"&&view==="wiz"&&org===null&&<Fade>
@@ -715,7 +825,7 @@ export default function App(){
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:8,marginBottom:4}}>
             {table.organisms.map((o,i)=>o.g==="p"?<OC key={i} o={o} V={V} gp={true} onClick={()=>setOrg(i)}/>:null)}
           </div>
-          {learn&&<Tch V={V}>💡 <b>Isolate counts:</b> n= is isolates tested. CLSI recommends minimum 30.</Tch>}
+          {learn&&<Tch V={V}><b>Isolate counts:</b> n= is isolates tested. CLSI recommends minimum 30.</Tch>}
         </Fade>}
 
         {table&&entry==="organism"&&view==="wiz"&&org!==null&&<Fade>
@@ -741,8 +851,8 @@ export default function App(){
               </div>);})}
             {filtered.length===0&&<p style={{color:V.tx4,padding:16,textAlign:"center"}}>No matching antibiotics</p>}
           </div>
-          {learn&&table.organisms[org].s.includes("cloacae")&&<Tch V={V}>⚠️ <b>AmpC Alert:</b> Enterobacter cloacae — resistance to 3rd-gen cephalosporins can emerge during therapy. Prefer cefepime.</Tch>}
-          <NB V={V}><p style={{fontWeight:700,marginBottom:6}}>📋 Table Notes</p>{table.notes.map((n,i)=><p key={i}>• {n}</p>)}</NB>
+          {learn&&table.organisms[org].s.includes("cloacae")&&<Tch V={V}>CAUTION: <b>AmpC Alert:</b> Enterobacter cloacae — resistance to 3rd-gen cephalosporins can emerge during therapy. Prefer cefepime.</Tch>}
+          <NB V={V}><p style={{fontWeight:700,marginBottom:6}}>Table Notes</p>{table.notes.map((n,i)=><p key={i}>• {n}</p>)}</NB>
         </Fade>}
 
         {/* TABLE VIEW */}
@@ -789,7 +899,7 @@ function SC({V,i,t,d,onClick}){
   return<button onClick={onClick} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:6,padding:"28px 16px",background:V.bg2,border:`1px solid ${V.bd2}`,borderRadius:12,cursor:"pointer",fontFamily:"inherit",color:"inherit",transition:"all .2s"}}
     onMouseEnter={e=>{e.currentTarget.style.borderColor=V.ac;e.currentTarget.style.background=V.acBg;e.currentTarget.style.transform="translateY(-2px)";}}
     onMouseLeave={e=>{e.currentTarget.style.borderColor=V.bd2;e.currentTarget.style.background=V.bg2;e.currentTarget.style.transform="none";}}>
-    <span style={{fontSize:32}}>{i}</span><span style={{fontSize:16,fontWeight:700}}>{t}</span><span style={{fontSize:12,color:V.tx4}}>{d}</span>
+    <span style={{fontSize:16,fontWeight:700}}>{t}</span><span style={{fontSize:12,color:V.tx4}}>{d}</span>
   </button>;
 }
 function OC({o,V,gp,onClick}){
@@ -813,7 +923,7 @@ function NB({V,children,style}){return<div style={{marginTop:20,padding:"12px 16
 function LearnPanel({V,openT,setOpenT}){
   return<div style={{background:V.lpBg,border:`1px solid ${V.bd}`,borderRadius:12,padding:16,marginBottom:20,animation:"sd .3s ease"}}>
     <div style={{display:"flex",gap:8,alignItems:"center",marginBottom:12,color:V.acL,fontWeight:700,fontSize:13,letterSpacing:"0.04em",textTransform:"uppercase"}}>
-      <span>📖</span><span>LEARNER MODE</span>
+      LEARNER MODE
     </div>
     <div style={{display:"flex",flexDirection:"column",gap:6}}>
       {Object.entries(TEACH_TOPICS).map(([k,t])=><button key={k} onClick={()=>setOpenT(openT===k?null:k)} style={{
